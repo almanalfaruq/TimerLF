@@ -7,10 +7,45 @@
         mc:Ignorable="d"
         Title="Timer Line Follower" Height="600" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#FF1B00C5">
     <Grid>
-        <Label x:Name="lblJudul" Content="LINE FOLLOWER&#xD;&#xA;" HorizontalAlignment="Left" Height="43" Margin="28,42,0,0" VerticalAlignment="Top" Width="131" FontSize="20" Foreground="White" FontFamily="Gotcha Gothic"/>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="7" Margin="32,42,0,0" VerticalAlignment="Top" Width="120"/>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="7" Margin="32,105,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="lblJudul_Copy" Content="COMPETITION&#xA;" HorizontalAlignment="Left" Height="43" Margin="28,69,0,0" VerticalAlignment="Top" Width="131" FontSize="20" Foreground="White" FontFamily="Gotcha Gothic"/>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="57" Margin="275,92,0,0" VerticalAlignment="Top" Width="246" Stroke="White" StrokeThickness="4"/>
+        <Label x:Name="lblJudul" Content="JUDUL" HorizontalAlignment="Center" Margin="352,39,350,488" VerticalAlignment="Center" Foreground="White" FontFamily="Source Sans Pro Black" FontSize="26.667" Grid.ColumnSpan="2"/>
+        <Label x:Name="lblTimer" Content="00:00:00" HorizontalAlignment="Center" Margin="277,91,275,0" VerticalAlignment="Top" Foreground="White" FontSize="48" Grid.ColumnSpan="2" FontFamily="OCR A Extended"/>
+        <Button x:Name="btnStart" Content="START" HorizontalAlignment="Left" Margin="275,160,0,0" VerticalAlignment="Top" Width="50" Height="50" BorderBrush="White" Background="White"/>
+        <Rectangle HorizontalAlignment="Left" Height="80" Margin="146,236,0,0" VerticalAlignment="Top" Width="241" Stroke="White" StrokeThickness="2"/>
+        <Button x:Name="btnPause" Content="PAUSE" HorizontalAlignment="Left" Margin="372,160,0,0" VerticalAlignment="Top" Width="50" Height="50" BorderBrush="White" Background="White" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnStop" Content="STOP" HorizontalAlignment="Left" Margin="74,160,0,0" VerticalAlignment="Top" Width="50" Height="50" BorderBrush="White" Background="White" Grid.Column="1"/>
+        <Rectangle HorizontalAlignment="Left" Height="80" Margin="146,331,0,0" VerticalAlignment="Top" Width="241" Stroke="White" StrokeThickness="2"/>
+        <Rectangle HorizontalAlignment="Left" Height="80" Margin="10,331,0,0" VerticalAlignment="Top" Width="241" Stroke="White" StrokeThickness="2" Grid.Column="1"/>
+        <Rectangle HorizontalAlignment="Left" Height="80" Margin="10,236,0,0" VerticalAlignment="Top" Width="241" Stroke="White" StrokeThickness="2" Grid.Column="1"/>
+        <Button x:Name="btnRace" Content="RACE" HorizontalAlignment="Left" Margin="232,422,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="70" Height="30"/>
+        <Button x:Name="btnWarmup" Content="WARM UP" HorizontalAlignment="Left" Margin="317,422,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="70" Height="30"/>
+        <Button x:Name="btnCall" Content="CALL" HorizontalAlignment="Left" Margin="10,422,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="70" Height="30" Grid.Column="1"/>
+        <Button x:Name="btnReset" Content="RESET" HorizontalAlignment="Left" Margin="94,422,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="70" Height="30" Grid.Column="1"/>
+        <Rectangle HorizontalAlignment="Left" Height="70" Margin="233,461,0,0" VerticalAlignment="Top" Width="329" Stroke="White" StrokeThickness="2" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="cmbSatu" HorizontalAlignment="Left" Margin="160,247,0,0" VerticalAlignment="Top" Width="212"/>
+        <ComboBox x:Name="cmbDua" HorizontalAlignment="Left" Margin="24,246,0,0" VerticalAlignment="Top" Width="212" Grid.Column="1"/>
+        <ComboBox x:Name="cmbTiga" HorizontalAlignment="Left" Margin="161,342,0,0" VerticalAlignment="Top" Width="212"/>
+        <ComboBox x:Name="cmbEmpat" HorizontalAlignment="Left" Margin="24,342,0,0" VerticalAlignment="Top" Width="212" Grid.Column="1"/>
+        <Label x:Name="lblTimSatu" Content="00:00:00" HorizontalAlignment="Left" Margin="161,274,0,0" VerticalAlignment="Top" Foreground="White" FontSize="21.333"/>
+        <Button x:Name="btnRecSatu" Content="RECORD" HorizontalAlignment="Left" Margin="278,275,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="95" Height="30"/>
+        <Label x:Name="lblTimTiga" Content="00:00:00" HorizontalAlignment="Left" Margin="161,367,0,0" VerticalAlignment="Top" Foreground="White" FontSize="21.333"/>
+        <Button x:Name="btnRecTiga" Content="RECORD" HorizontalAlignment="Left" Margin="278,372,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="95" Height="30"/>
+        <Label x:Name="lblTimEmpat" Content="00:00:00" HorizontalAlignment="Left" Margin="25,367,0,0" VerticalAlignment="Top" Foreground="White" FontSize="21.333" Grid.Column="1"/>
+        <Button x:Name="btnRecEmpat" Content="RECORD" HorizontalAlignment="Left" Margin="141,372,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="95" Height="30" Grid.Column="1"/>
+        <Label x:Name="lblTimDua" Content="00:00:00" HorizontalAlignment="Left" Margin="25,274,0,0" VerticalAlignment="Top" Foreground="White" FontSize="21.333" Grid.Column="1"/>
+        <Button x:Name="btnRecDua" Content="RECORD" HorizontalAlignment="Left" Margin="141,275,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="95" Height="30" Grid.Column="1"/>
+        <TextBox x:Name="txtJudul" HorizontalAlignment="Left" Height="23" Margin="242,495,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
+        <TextBox x:Name="txtJam" HorizontalAlignment="Left" Height="23" Margin="10,495,0,0" TextWrapping="Wrap" Text="00" VerticalAlignment="Top" Width="37" Grid.Column="1"/>
+        <TextBox x:Name="txtMenit" HorizontalAlignment="Left" Height="23" Margin="60,495,0,0" TextWrapping="Wrap" Text="00" VerticalAlignment="Top" Width="37" Grid.Column="1" RenderTransformOrigin="-0.216,0.609"/>
+        <TextBox x:Name="txtDetik" HorizontalAlignment="Left" Height="23" Margin="110,495,0,0" TextWrapping="Wrap" Text="00" VerticalAlignment="Top" Width="37" Grid.Column="1"/>
+        <Label x:Name="label" Content="Judul" HorizontalAlignment="Left" Margin="236,464,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <Label x:Name="label_Copy" Content="Waktu" HorizontalAlignment="Left" Margin="5,464,0,0" VerticalAlignment="Top" Foreground="White" Grid.Column="1"/>
+        <Label x:Name="label_Copy2" Content=":" HorizontalAlignment="Left" Margin="47,492,0,0" VerticalAlignment="Top" Foreground="White" Grid.Column="1"/>
+        <Label x:Name="label_Copy3" Content=":" HorizontalAlignment="Left" Margin="97,492,0,0" VerticalAlignment="Top" Foreground="White" Grid.Column="1"/>
+        <Button x:Name="button_Copy" Content="RECORD THE RESULT TO DATABASE" HorizontalAlignment="Left" Margin="293,541,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="208" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
