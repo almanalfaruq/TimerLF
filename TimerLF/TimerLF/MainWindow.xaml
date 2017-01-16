@@ -46,6 +46,6 @@
         <Label x:Name="label_Copy" Content="Waktu" HorizontalAlignment="Left" Margin="5,464,0,0" VerticalAlignment="Top" Foreground="White" Grid.Column="1"/>
         <Label x:Name="label_Copy2" Content=":" HorizontalAlignment="Left" Margin="47,492,0,0" VerticalAlignment="Top" Foreground="White" Grid.Column="1"/>
         <Label x:Name="label_Copy3" Content=":" HorizontalAlignment="Left" Margin="97,492,0,0" VerticalAlignment="Top" Foreground="White" Grid.Column="1"/>
-        <Button x:Name="button_Copy" Content="RECORD THE RESULT TO DATABASE" HorizontalAlignment="Left" Margin="293,541,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="208" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnRecordDB" Content="RECORD THE RESULT TO DATABASE" HorizontalAlignment="Left" Margin="293,541,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="208" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
