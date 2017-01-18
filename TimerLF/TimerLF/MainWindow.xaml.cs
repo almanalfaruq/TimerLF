@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Excel;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,11 +29,16 @@ namespace TimerLF
         string strTimer;
         DispatcherTimer timer;
         int intTimer = 0;
+        DataSet result;
+        DataTable dataTable;
+        string[] recordWaktu, teamName;
 
         public MainWindow()
         {
             InitializeComponent();
             lblJudul.Content = "TECHNOCORNER 2017";
+            recordWaktu = new string[4];
+            teamName = new string[4];
         }
 
         private void btnRace_Click(object sender, RoutedEventArgs e)
@@ -168,7 +177,8 @@ namespace TimerLF
             int s = intTimer % 60;
             int m = intTimer / 60 % 60;
             int h = intTimer / (60 * 60);
-            lblTimSatu.Content = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0'));
+            recordWaktu[0] = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')); ;
+            lblTimSatu.Content = recordWaktu[0];
         }
 
         private void btnRecDua_Click(object sender, RoutedEventArgs e)
@@ -176,7 +186,8 @@ namespace TimerLF
             int s = intTimer % 60;
             int m = intTimer / 60 % 60;
             int h = intTimer / (60 * 60);
-            lblTimDua.Content = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0'));
+            recordWaktu[1] = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')); ;
+            lblTimSatu.Content = recordWaktu[1];
         }
 
         private void btnRecTiga_Click(object sender, RoutedEventArgs e)
@@ -184,7 +195,8 @@ namespace TimerLF
             int s = intTimer % 60;
             int m = intTimer / 60 % 60;
             int h = intTimer / (60 * 60);
-            lblTimTiga.Content = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0'));
+            recordWaktu[2] = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')); ;
+            lblTimSatu.Content = recordWaktu[2];
         }
 
         private void btnRecEmpat_Click(object sender, RoutedEventArgs e)
@@ -192,7 +204,54 @@ namespace TimerLF
             int s = intTimer % 60;
             int m = intTimer / 60 % 60;
             int h = intTimer / (60 * 60);
-            lblTimEmpat.Content = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0'));
+            recordWaktu[3] = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')); ;
+            lblTimSatu.Content = recordWaktu[3];
+        }
+
+        private void cmbSatu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            teamName[0] = cmbSatu.Text;
+        }
+
+        private void cmbDua_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            teamName[1] = cmbDua.Text;
+        }
+
+        private void cmbTiga_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            teamName[2] = cmbTiga.Text;
+        }
+
+        private void cmbEmpat_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            teamName[3] = cmbTiga.Text;
+        }
+
+        private void openExcel_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog() { Filter = "Excel Workbook|*.xlsx", ValidateNames = true } ;
+
+            if (openFile.ShowDialog() == true)
+            {
+                FileStream fs = File.Open(openFile.FileName, FileMode.Open, FileAccess.Read);
+                IExcelDataReader reader = ExcelReaderFactory.CreateOpenXmlReader(fs);
+                reader.IsFirstRowAsColumnNames = true;
+                result = reader.AsDataSet();
+                dataTable = result.Tables[0];
+                List<string> tim = new List<string>(dataTable.Rows.Count);
+                foreach(DataRow row in dataTable.Rows)
+                {
+                    tim.Add((string)row[1]);
+                }
+                foreach(string namaTim in tim)
+                {
+                    cmbSatu.Items.Add(namaTim);
+                    cmbDua.Items.Add(namaTim);
+                    cmbTiga.Items.Add(namaTim);
+                    cmbEmpat.Items.Add(namaTim);
+                }
+            }
         }
     }
 }
