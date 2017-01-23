@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -26,16 +27,20 @@ namespace TimerLF
 
     public partial class MainWindow : Window
     {
-        string strTimer;
+        string strTimer, today;
         DispatcherTimer timer;
         int intTimer = 0;
         DataSet result;
         DataTable dataTable;
         string[] recordWaktu, teamName;
+        SQLiteConnection conn;
+
+        private DBHelper dbHelper;
 
         public MainWindow()
         {
             InitializeComponent();
+            dbHelper = new DBHelper();
             lblJudul.Content = "TECHNOCORNER 2017";
             recordWaktu = new string[4];
             teamName = new string[4];
@@ -143,28 +148,7 @@ namespace TimerLF
             switch(result)
             {
                 case MessageBoxResult.Yes:
-                    if (timer != null)
-                    {
-                        if (timer.IsEnabled == true)
-                        {
-                            timer.Stop();
-                        }
-                    }
-                    intTimer = 0;
-                    btnStart.Content = "START";
-                    btnStart.IsEnabled = true;
-                    btnPause.IsEnabled = false;
-                    btnStop.IsEnabled = false;
-                    lblJudul.Content = "TECHNOCORNER 2017";
-                    lblTimer.Content = "00:00:00";
-                    lblTimSatu.Content = "00:00:00";
-                    lblTimDua.Content = "00:00:00";
-                    lblTimTiga.Content = "00:00:00";
-                    lblTimEmpat.Content = "00:00:00";
-                    txtJudul.Text = "";
-                    txtJam.Text = "00";
-                    txtMenit.Text = "00";
-                    txtDetik.Text = "00";
+                    reset();
                     break;
                 case MessageBoxResult.No:
                     break;
@@ -174,58 +158,22 @@ namespace TimerLF
 
         private void btnRecSatu_Click(object sender, RoutedEventArgs e)
         {
-            int s = intTimer % 60;
-            int m = intTimer / 60 % 60;
-            int h = intTimer / (60 * 60);
-            recordWaktu[0] = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')); ;
-            lblTimSatu.Content = recordWaktu[0];
+            recordTime(0, cmbSatu, lblTimSatu);
         }
 
         private void btnRecDua_Click(object sender, RoutedEventArgs e)
         {
-            int s = intTimer % 60;
-            int m = intTimer / 60 % 60;
-            int h = intTimer / (60 * 60);
-            recordWaktu[1] = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')); ;
-            lblTimSatu.Content = recordWaktu[1];
+            recordTime(1, cmbDua, lblTimDua);
         }
 
         private void btnRecTiga_Click(object sender, RoutedEventArgs e)
         {
-            int s = intTimer % 60;
-            int m = intTimer / 60 % 60;
-            int h = intTimer / (60 * 60);
-            recordWaktu[2] = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')); ;
-            lblTimSatu.Content = recordWaktu[2];
+            recordTime(2, cmbTiga, lblTimTiga);
         }
 
         private void btnRecEmpat_Click(object sender, RoutedEventArgs e)
         {
-            int s = intTimer % 60;
-            int m = intTimer / 60 % 60;
-            int h = intTimer / (60 * 60);
-            recordWaktu[3] = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')); ;
-            lblTimSatu.Content = recordWaktu[3];
-        }
-
-        private void cmbSatu_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            teamName[0] = cmbSatu.Text;
-        }
-
-        private void cmbDua_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            teamName[1] = cmbDua.Text;
-        }
-
-        private void cmbTiga_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            teamName[2] = cmbTiga.Text;
-        }
-
-        private void cmbEmpat_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            teamName[3] = cmbTiga.Text;
+            recordTime(3, cmbEmpat, lblTimEmpat);
         }
 
         private void openExcel_Click(object sender, RoutedEventArgs e)
@@ -252,6 +200,73 @@ namespace TimerLF
                     cmbEmpat.Items.Add(namaTim);
                 }
             }
+        }
+
+        private void saveDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            insertIntoDB(teamName, recordWaktu);
+        }
+
+        private void btnRecordDB_Click(object sender, RoutedEventArgs e)
+        {
+            insertIntoDB(teamName, recordWaktu);
+        }
+
+        private void viewDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            var databaseWindows = new Database();
+            databaseWindows.ShowDialog();
+        }
+
+
+        // Method-method selain tombol click dll.
+        private void recordTime(int index, ComboBox cmb, Label lbl)
+        {
+            int s = intTimer % 60;
+            int m = intTimer / 60 % 60;
+            int h = intTimer / (60 * 60);
+            recordWaktu[index] = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')); ;
+            teamName[index] = cmb.Text;
+            lbl.Content = recordWaktu[index];
+        }
+        private void insertIntoDB(string[] tim, string[] waktu)
+        {
+            dbHelper.insertIntoDB(tim, waktu);
+            MessageBoxResult result = MessageBox.Show("Saved to database. Do you want to reset this timer?", "Reset Timer", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+            switch(result)
+            {
+                case MessageBoxResult.Yes:
+                    reset();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
+
+        private void reset()
+        {
+            if (timer != null)
+            {
+                if (timer.IsEnabled == true)
+                {
+                    timer.Stop();
+                }
+            }
+            intTimer = 0;
+            btnStart.Content = "START";
+            btnStart.IsEnabled = true;
+            btnPause.IsEnabled = false;
+            btnStop.IsEnabled = false;
+            lblJudul.Content = "TECHNOCORNER 2017";
+            lblTimer.Content = "00:00:00";
+            lblTimSatu.Content = "00:00:00";
+            lblTimDua.Content = "00:00:00";
+            lblTimTiga.Content = "00:00:00";
+            lblTimEmpat.Content = "00:00:00";
+            txtJudul.Text = "";
+            txtJam.Text = "00";
+            txtMenit.Text = "00";
+            txtDetik.Text = "00";
         }
     }
 }

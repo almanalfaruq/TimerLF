@@ -15,8 +15,8 @@
             <Menu DockPanel.Dock="Top" Margin="0,0,-397,0">
                 <MenuItem Header="_File">
                     <MenuItem Header="Open excel file... " Click="openExcel_Click"/>
-                    <MenuItem Header="Save to database"/>
-                    <MenuItem Header="View database"/>
+                    <MenuItem Header="Save to database" Click="saveDatabase_Click"/>
+                    <MenuItem Header="View database" Click="viewDatabase_Click"/>
                     <MenuItem Header="Exit"/>
                 </MenuItem>
             </Menu>
@@ -35,10 +35,10 @@
         <Button x:Name="btnCall" Content="CALL" HorizontalAlignment="Left" Margin="10,409,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="70" Height="30" Grid.Column="1" Click="btnCall_Click"/>
         <Button x:Name="btnReset" Content="RESET" HorizontalAlignment="Left" Margin="94,409,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="70" Height="30" Grid.Column="1" Click="btnReset_Click"/>
         <Rectangle HorizontalAlignment="Left" Height="70" Margin="233,448,0,0" VerticalAlignment="Top" Width="329" Stroke="White" StrokeThickness="2" Grid.ColumnSpan="2"/>
-        <ComboBox x:Name="cmbSatu" HorizontalAlignment="Left" Margin="160,234,0,0" VerticalAlignment="Top" Width="212" SelectionChanged="cmbSatu_SelectionChanged"/>
-        <ComboBox x:Name="cmbDua" HorizontalAlignment="Left" Margin="24,233,0,0" VerticalAlignment="Top" Width="212" Grid.Column="1" SelectionChanged="cmbDua_SelectionChanged"/>
-        <ComboBox x:Name="cmbTiga" HorizontalAlignment="Left" Margin="161,329,0,0" VerticalAlignment="Top" Width="212" SelectionChanged="cmbTiga_SelectionChanged"/>
-        <ComboBox x:Name="cmbEmpat" HorizontalAlignment="Left" Margin="24,329,0,0" VerticalAlignment="Top" Width="212" Grid.Column="1" SelectionChanged="cmbEmpat_SelectionChanged"/>
+        <ComboBox x:Name="cmbSatu" HorizontalAlignment="Left" Margin="160,234,0,0" VerticalAlignment="Top" Width="212"/>
+        <ComboBox x:Name="cmbDua" HorizontalAlignment="Left" Margin="24,233,0,0" VerticalAlignment="Top" Width="212" Grid.Column="1"/>
+        <ComboBox x:Name="cmbTiga" HorizontalAlignment="Left" Margin="161,329,0,0" VerticalAlignment="Top" Width="212"/>
+        <ComboBox x:Name="cmbEmpat" HorizontalAlignment="Left" Margin="24,329,0,0" VerticalAlignment="Top" Width="212" Grid.Column="1"/>
         <Label x:Name="lblTimSatu" Content="00:00:00" HorizontalAlignment="Left" Margin="161,261,0,0" VerticalAlignment="Top" Foreground="White" FontSize="21.333"/>
         <Button x:Name="btnRecSatu" Content="RECORD" HorizontalAlignment="Left" Margin="278,262,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="95" Height="30" Click="btnRecSatu_Click"/>
         <Label x:Name="lblTimTiga" Content="00:00:00" HorizontalAlignment="Left" Margin="161,354,0,0" VerticalAlignment="Top" Foreground="White" FontSize="21.333"/>
@@ -55,7 +55,7 @@
         <Label x:Name="label_Copy" Content="Waktu" HorizontalAlignment="Left" Margin="5,451,0,0" VerticalAlignment="Top" Foreground="White" Grid.Column="1"/>
         <Label x:Name="label_Copy2" Content=":" HorizontalAlignment="Left" Margin="47,479,0,0" VerticalAlignment="Top" Foreground="White" Grid.Column="1"/>
         <Label x:Name="label_Copy3" Content=":" HorizontalAlignment="Left" Margin="97,479,0,0" VerticalAlignment="Top" Foreground="White" Grid.Column="1"/>
-        <Button x:Name="btnRecordDB" Content="RECORD THE RESULT TO DATABASE" HorizontalAlignment="Left" Margin="293,528,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="208" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnRecordDB" Content="RECORD THE RESULT TO DATABASE" HorizontalAlignment="Left" Margin="293,528,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White" Width="208" Grid.ColumnSpan="2" Click="btnRecordDB_Click"/>
         <Border BorderBrush="White" BorderThickness="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="69" Margin="269,79,269,423" VerticalAlignment="Center" Width="256">
             <Label x:Name="lblTimer" Content="00:00:00" HorizontalAlignment="Center" Margin="-4" VerticalAlignment="Center" Foreground="White" FontSize="48" FontFamily="OCR A Extended" Height="69" Width="256" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0" BorderBrush="White"/>
         </Border>
